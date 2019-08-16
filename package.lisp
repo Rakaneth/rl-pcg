@@ -4,4 +4,7 @@
   (:use #:cl)
   (:export 
      :get-int
-     :get-bool))
+     :get-bool
+     :new-rng
+     :test-get-int
+     :test-get-bool))
