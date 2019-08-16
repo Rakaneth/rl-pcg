@@ -1,4 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:cl-pcg
-  (:use #:cl))
+  (:use #:cl)
+  (:export 
+     :get-int
+     :get-bool))
