@@ -3,8 +3,8 @@
 (in-package #:cl-pcg)
 
 (defstruct pcg
-  (state 0 :type (integer 0 *))
-  (counter 0 :type (integer 0 *)))
+  (state 0 :type (unsigned-byte 64))
+  (counter 0 :type (unsigned-byte 64)))
 
 (defun new-rng (&key (seed nil))
   (let* ((start (or seed (get-universal-time)))
@@ -17,7 +17,7 @@
          (shift-2 (logxor shift-1 cur-state))
          (xorshifted (ash shift-2 27))
          (rot (ash cur-state -59)))
-    (setq (pcg-state rng) (+ (pcg-counterr rng) 
+    (setf (pcg-state rng) (+ (pcg-counter rng) 
                              (* cur-state 6364136223846783005)))
     (logior (ash xorshifted (- rot)) 
             (ash xorshifted (logand (- rot) 31)))))
