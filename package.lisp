@@ -7,4 +7,5 @@
      :get-bool
      :new-rng
      :test-get-int
-     :test-get-bool))
+     :test-get-bool
+     :*global-rng*))

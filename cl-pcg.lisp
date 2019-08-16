@@ -4,6 +4,7 @@
 
 (defparameter *bit-mask-64* #xFFFFFFFFFFFFFFFF)
 
+
 (defstruct pcg
   (state 0 :type (unsigned-byte 64))
   (counter 0 :type (unsigned-byte 64)))
@@ -13,9 +14,9 @@
          (rng (make-pcg))
          (counter (mod start 12)))
     (setf (pcg-counter rng) (logior (shl-64 counter 1) 1))
-    (shuffle-rng rng)
+    (shuffle-rng :rng rng)
     (incf (pcg-state rng) counter)
-    (shuffle-rng rng)
+    (shuffle-rng :rng rng)
     rng))
 
 (defun shl-64 (x bits)
@@ -24,14 +25,15 @@
 (defun shr-64 (x bits)
   (logand (ash x (- bits)) *bit-mask-64*))
 
-(defun shuffle-rng (rng)
-  (let* ((cur-state (pcg-state rng))
+(defun shuffle-rng (&key (rng nil))
+  (let* ((cur-rng (or rng *global-rng*))
+         (cur-state (pcg-state cur-rng))
          (shift-1 (shr-64 cur-state 18))
          (shift-2 (logxor shift-1 cur-state))
          (xorshifted (shr-64 shift-2 27))
          (rot (shr-64 cur-state 59)))
-    (setf (pcg-state rng) (logand *bit-mask-64* 
-                                  (+ (pcg-counter rng) 
+    (setf (pcg-state cur-rng) (logand *bit-mask-64* 
+                                  (+ (pcg-counter cur-rng) 
                                      (* cur-state 6364136223846783005))))
     (logior (shr-64 xorshifted rot)
             (shl-64 xorshifted (logand (- rot) 31)))))
@@ -40,28 +42,31 @@
   (let ((rng (new-rng :seed seed))
         (lst '()))
     (dotimes (x times lst)
-      (setf lst (cons (shuffle-rng rng) lst)))))
+      (setf lst (cons (shuffle-rng :rng rng) lst)))))
 
-(defun get-int (max-range rng &key (min-range 0))
-  (let* ((real-range (- max-range min-range))
-        (threshold (mod #x10000000000000000 real-range)))
-    (loop :with x = (shuffle-rng rng)
+(defun get-int (&key (min-num 0) max-num (rng nil))
+  (let* ((real-range (- max-num min-num))
+         (threshold (mod #x10000000000000000 real-range))
+         (cur-rng (or rng *global-rng*)))
+    (loop :with x = (shuffle-rng :rng cur-rng)
           :do (if (>= x threshold)
                   (return (+ (mod x real-range)
-                             min-range))))))
+                             min-num))))))
 
-(defun get-bool (rng)
-  (oddp (shuffle-rng rng)))
+(defun get-bool (&key (rng nil))
+  (let ((cur-rng (or rng *global-rng*)))
+    (oddp (shuffle-rng :rng cur-rng))))
 
 (defun test-get-int (times &key (seed nil))
-  (loop repeat times
+  (loop :repeat times
         :with rng = (new-rng :seed seed)
-        :for roll = (get-int 100 rng)
+        :for roll = (get-int :max-num 100 :rng rng)
         :collect roll))
 
 (defun test-get-bool (times &key (seed nil))
   (loop :repeat times
         :with rng = (new-rng :seed seed)
-        :for roll = (get-bool rng)
+        :for roll = (get-bool :rng rng)
         :collect roll))
 
+(defparameter *global-rng* (new-rng))
