@@ -45,7 +45,7 @@
       (setf lst (cons (shuffle-rng :rng rng) lst)))))
 
 (defun get-int (&key (min-num 0) max-num (rng nil))
-  (let* ((real-range (- max-num min-num))
+  (let* ((real-range (1+ (- max-num min-num)))
          (threshold (mod #x10000000000000000 real-range))
          (cur-rng (or rng *global-rng*)))
     (loop :with x = (shuffle-rng :rng cur-rng)
