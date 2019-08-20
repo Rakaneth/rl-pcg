@@ -11,5 +11,5 @@
      :roll
      :roll-simple
      :get-weighted
-     :random-element)
+     :get-random-element)
   (:nicknames :pcg))

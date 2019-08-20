@@ -101,7 +101,7 @@
                ;;;; (terpri)
                (return item)))))
 
-(defun random-element (s &key (rng nil))
+(defun get-random-element (s &key (rng nil))
   (let* ((-rng (or rng *global-rng*))
          (roll (get-int :max-num (length s) :rng -rng)))
     (nth roll s)))
