@@ -8,4 +8,6 @@
      :new-rng
      :test-get-int
      :test-get-bool
-     :*global-rng*))
+     :*global-rng*
+     :roll)
+  (:nicknames :pcg))
