@@ -7,9 +7,9 @@
      :get-bool
      :get-float
      :new-rng
-     :test-get-int
-     :test-get-bool
      :*global-rng*
      :roll
-     :roll-simple)
+     :roll-simple
+     :get-weighted
+     :random-element)
   (:nicknames :pcg))
