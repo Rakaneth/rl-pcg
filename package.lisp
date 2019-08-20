@@ -5,6 +5,7 @@
   (:export 
      :get-int
      :get-bool
+     :get-float
      :new-rng
      :test-get-int
      :test-get-bool

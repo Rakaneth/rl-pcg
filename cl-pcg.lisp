@@ -57,6 +57,11 @@
   (let ((cur-rng (or rng *global-rng*)))
     (oddp (shuffle-rng :rng cur-rng))))
 
+(defun get-float (&key (rng nil))
+  (let* ((-rng (or rng *global-rng*))
+         (roll (shuffle-rng :rng -rng)))
+    (float (* roll (expt 2 -64)))))
+
 (defun test-get-int (times &key (seed nil))
   (loop :repeat times
         :with rng = (new-rng :seed seed)
