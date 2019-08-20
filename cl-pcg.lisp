@@ -45,12 +45,11 @@
       (setf lst (cons (shuffle-rng :rng rng) lst)))))
 
 (defun get-int (&key (min-num 0) max-num (rng nil))
-  (let* ((real-range (1+ (- max-num min-num)))
-         (threshold (mod #x10000000000000000 real-range))
+  (let* ((threshold (mod #x10000000000000000 max-num))
          (cur-rng (or rng *global-rng*)))
     (loop :for x = (shuffle-rng :rng cur-rng)
        :do (if (>= x threshold)
-               (return (+ (mod x real-range) min-num))))))
+               (return (+ (mod x max-num) min-num))))))
 
 (defun get-bool (&key (rng nil))
   (let ((cur-rng (or rng *global-rng*)))
@@ -92,7 +91,7 @@
 (defun get-weighted (table &key (rng nil))
   (let* ((-rng (or rng *global-rng*))
          (total (sum-weighted-list table))
-         (roll (get-int :max-num (1- total) :rng -rng)))
+         (roll (get-int :max-num total :rng -rng)))
     ;;;; (format t "Roll is ~d~%" roll)
     (loop :for (item . weight) in table
           :summing weight into acc
@@ -104,7 +103,7 @@
 
 (defun random-element (s &key (rng nil))
   (let* ((-rng (or rng *global-rng*))
-         (roll (get-int :max-num (1- (length s)) :rng -rng)))
+         (roll (get-int :max-num (length s) :rng -rng)))
     (nth roll s)))
 
 (defun roll-simple (sides &key (dice 1) (bonus 0) (rng nil))
