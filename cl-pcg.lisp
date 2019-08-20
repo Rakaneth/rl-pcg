@@ -69,12 +69,16 @@
         :for roll = (get-bool :rng rng)
         :collect roll))
 
-(defun roll (sides &key (dice 1) (bonus 0) (rng nil))
+(defun roll (sides &key (dice 1) (bonus 0) (rng nil) (diff 0) (target 0))
   (loop :repeat dice
         :for y = (get-int :min-num 1 :max-num sides :rng rng)
         :collect y into rolls
         :summing y into total
-        :finally (return (list :total (+ total bonus) :rolls rolls))))
+        :counting (>= y diff) into hits   
+        :finally (return (list :total (+ total bonus) 
+                               :rolls rolls
+                               :hits hits
+                               :success (>= total target)))))
 
 (defun roll-simple (sides &key (dice 1) (bonus 0) (rng nil))
   (getf (roll sides :dice dice :bonus bonus :rng rng) :total))
