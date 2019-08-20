@@ -9,5 +9,6 @@
      :test-get-int
      :test-get-bool
      :*global-rng*
-     :roll)
+     :roll
+     :roll-simple)
   (:nicknames :pcg))

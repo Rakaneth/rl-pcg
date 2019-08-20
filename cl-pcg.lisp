@@ -69,11 +69,14 @@
         :for roll = (get-bool :rng rng)
         :collect roll))
 
-(defun roll (sides &optional (dice 1))
+(defun roll (sides &key (dice 1) (bonus 0) (rng nil))
   (loop :repeat dice
-        :for y = (get-int :min-num 1 :max-num sides)
+        :for y = (get-int :min-num 1 :max-num sides :rng rng)
         :collect y into rolls
         :summing y into total
-        :finally (return (list :total total :rolls rolls))))
+        :finally (return (list :total (+ total bonus) :rolls rolls))))
+
+(defun roll-simple (sides &key (dice 1) (bonus 0) (rng nil))
+  (getf (roll sides :dice dice :bonus bonus :rng rng) :total))
 
 (defparameter *global-rng* (new-rng))
