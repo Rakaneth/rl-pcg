@@ -106,7 +106,18 @@
          (roll (get-int :max-num (length s) :rng -rng)))
     (nth roll s)))
 
-(defun roll-simple (sides &key (dice 1) (bonus 0) (rng nil))
-  (getf (roll sides :dice dice :bonus bonus :rng rng) :total))
+(defmacro extract-roll-function (key)
+  (let* ((package (symbol-package 'roll))
+         (fn-name (intern (format nil "ROLL-~a" key) package)))
+    `(defun ,fn-name (sides &key (dice 1) (bonus 0) (diff 0) (target 0) (rng nil))
+       (getf (roll sides :dice dice 
+                         :bonus bonus 
+                         :diff diff 
+                         :target target 
+                         :rng rng) ,key))))
+
+(extract-roll-function :total)
+(extract-roll-function :hits)
+(extract-roll-function :target)
 
 (defparameter *global-rng* (new-rng))

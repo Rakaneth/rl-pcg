@@ -9,7 +9,9 @@
      :new-rng
      :*global-rng*
      :roll
-     :roll-simple
+     :roll-total
+     :roll-target
+     :roll-hits
      :get-weighted
      :get-random-element)
   (:nicknames :pcg))
