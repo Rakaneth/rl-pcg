@@ -10,7 +10,7 @@
      :*global-rng*
      :roll
      :roll-total
-     :roll-target
+     :roll-success
      :roll-hits
      :get-weighted
      :get-random-element)

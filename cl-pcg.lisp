@@ -118,6 +118,6 @@
 
 (extract-roll-function :total)
 (extract-roll-function :hits)
-(extract-roll-function :target)
+(extract-roll-function :success)
 
 (defparameter *global-rng* (new-rng))
