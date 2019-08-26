@@ -45,6 +45,7 @@
       (setf lst (cons (shuffle-rng :rng rng) lst)))))
 
 (defun get-int (&key (min-num 0) max-num (rng nil))
+  "Gets a random integer between min-num and max-num. Min-num is 0 by default."
   (let* ((threshold (mod #x10000000000000000 max-num))
          (cur-rng (or rng *global-rng*)))
     (loop :for x = (shuffle-rng :rng cur-rng)
@@ -52,10 +53,12 @@
                (return (+ (mod x max-num) min-num))))))
 
 (defun get-bool (&key (rng nil))
+  "Gets a random boolean."
   (let ((cur-rng (or rng *global-rng*)))
     (oddp (shuffle-rng :rng cur-rng))))
 
 (defun get-float (&key (rng nil))
+  "Gets a random float in [0, 1)."
   (let* ((-rng (or rng *global-rng*))
          (roll (shuffle-rng :rng -rng)))
     (float (* roll (expt 2 -64)))))
@@ -72,14 +75,15 @@
      :for roll = (get-bool :rng rng)
      :collect roll))
 
-(defun roll (sides &key (dice 1) (bonus 0) (rng nil) (diff 0) (target 0))
+(defun roll (sides &key (dice 1) (bonus 0) (rng nil) (diff 0) (target 0) (keep nil))
   (loop :repeat dice
+        :with k = (or keep dice)
      :for y = (get-int :min-num 1 :max-num sides :rng rng)
      :collect y into rolls
      :summing y into total
      :counting (>= y diff) into hits   
      :finally (return (list :total (+ total bonus) 
-                            :rolls rolls
+                            :rolls (subseq (sort rolls #'>) 0 (min k dice))
                             :hits hits
                             :success (>= total target)))))
 
@@ -89,6 +93,7 @@
        :finally (return total)))
 
 (defun get-weighted (table &key (rng nil))
+  "Gets a random item from a list of weighted items in the form of (item . weight)."
   (let* ((-rng (or rng *global-rng*))
          (total (sum-weighted-list table))
          (roll (get-int :max-num total :rng -rng)))
@@ -102,6 +107,7 @@
                (return item)))))
 
 (defun get-random-element (s &key (rng nil))
+  "Gets a random element from a sequence."
   (let* ((-rng (or rng *global-rng*))
          (roll (get-int :max-num (length s) :rng -rng)))
     (nth roll s)))
@@ -109,12 +115,16 @@
 (defmacro extract-roll-function (key)
   (let* ((package (symbol-package 'roll))
          (fn-name (intern (format nil "ROLL-~a" key) package)))
-    `(defun ,fn-name (sides &key (dice 1) (bonus 0) (diff 0) (target 0) (rng nil))
-       (getf (roll sides :dice dice 
-                         :bonus bonus 
-                         :diff diff 
-                         :target target 
-                         :rng rng) ,key))))
+    `(defun ,fn-name (sides &key (dice 1) (bonus 0) (diff 0) (target 0) (rng nil) (keep nil))
+       (let* ((-roll (roll sides 
+                           :dice dice
+                           :bonus bonus
+                           :diff diff
+                           :target target
+                           :rng rng
+                           :keep keep))
+              (result (getf -roll ,key)))
+         (values result -roll)))))
 
 (extract-roll-function :total)
 (extract-roll-function :hits)
