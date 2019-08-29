@@ -27,7 +27,7 @@
         :rng (dp/rng dp)))
 
 (defmethod roll ((dice-string string) &key rng)
-  (roll (parse (create-dice-parser dice-string :rng rng))))
+  (roll (parse dice-string :rng rng)))
 
 (defmacro extract-roll-function (key)
   (let* ((package (symbol-package 'roll))
@@ -69,8 +69,8 @@
   `(if (digit-char-p ,cur-char)
        (vector-push-extend ,cur-char (dp/working-vector ,dp))
        (case ,cur-char ,@body (t (error 'dice-parse-error
-                                                :dice-string (dp/dice-string ,dp)
-                                                :state (dp/state ,dp))))))
+                                        :dice-string (dp/dice-string ,dp)
+                                        :state (dp/state ,dp))))))
 
 (defmacro change-state (dp accessor new-state)
   `(setf (,accessor ,dp) (read-from-string (coerce (dp/working-vector ,dp) 'string))
