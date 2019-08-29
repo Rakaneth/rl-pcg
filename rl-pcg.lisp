@@ -1,6 +1,6 @@
 ;;;; cl-pcg.lisp
 
-(in-package #:cl-pcg)
+(in-package #:rl-pcg)
 
 (defparameter *bit-mask-64* #xFFFFFFFFFFFFFFFF)
 

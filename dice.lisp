@@ -1,4 +1,4 @@
-(in-package #:cl-pcg)
+(in-package #:rl-pcg)
 
 (defgeneric roll (rollable &key))
 
