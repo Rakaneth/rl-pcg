@@ -115,7 +115,7 @@
   (state-case dp cur-char
     (#\Nul (change-state dp dp/diff #'state-done))))
 
-(defmethod parse ((dp dice-parser))
+(defmethod do-parse ((dp dice-parser))
   (loop :initially (setf (dp/state dp) #'state-dice
                          (dp/keep dp) 0)
         :for c across (dp/dice-string dp)
@@ -124,6 +124,9 @@
                            (funcall (dp/state dp) dp #\Nul)
                            (funcall (dp/state dp) dp)
                            dp))))
+
+(defun parse (dice-string &key rng)
+  (do-parse (create-dice-parser dice-string :rng rng)))
 
 (defmethod state-done ((dp dice-parser))
   (if (zerop (dp/keep dp))

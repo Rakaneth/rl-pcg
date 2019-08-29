@@ -14,6 +14,5 @@
      :roll-hits
      :get-weighted
      :get-random-element
-     :create-dice-parser
      :parse)
   (:nicknames :pcg))
