@@ -1,6 +1,6 @@
 ;;;; package.lisp
 
-(defpackage #:cl-pcg
+(defpackage #:rl-pcg
   (:use #:cl)
   (:export 
      :get-int

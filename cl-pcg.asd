@@ -1,6 +1,6 @@
 ;;;; cl-pcg.asd
 
-(asdf:defsystem #:cl-pcg
+(asdf:defsystem #:rl-pcg
   :description "A random number generator of the PCG family for use with roguelikes"
   :author "Quincy West"
   :license  "MIT"
