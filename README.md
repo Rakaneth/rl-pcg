@@ -4,7 +4,7 @@ This is a random number generator based on [this](https://github.com/imneme/pcg-
 
 # How to use
 
-Clone this project into a place where it can be loaded by [Quicklisp](quicklisp.org); it can then be loaded standalone or pulled in as a dependency for any other Quicklisp project.
+Clone this project into a place where it can be loaded by [Quicklisp](http://quicklisp.org); it can then be loaded standalone or pulled in as a dependency for any other Quicklisp project.
 
 The package provides the nickname `pcg` that can be used with exported functions.
 
