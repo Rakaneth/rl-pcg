@@ -7,6 +7,5 @@
   :version "0.2.2"
   :serial t
   :components ((:file "package")
-               (:file "cl-pcg")
+               (:file "rl-pcg")
                (:file "dice")))
-
