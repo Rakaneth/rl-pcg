@@ -17,18 +17,6 @@
                                  :success (>= total target)
                                  :hits hits)))))
 
-(defmethod roll ((dp dice-parser) &key)
-  (roll (dp/sides dp) 
-        :dice (dp/dice dp)
-        :bonus (- (dp/bonus dp) (dp/penalty dp))
-        :diff (dp/diff dp)
-        :target (dp/target dp)
-        :keep (dp/keep dp)
-        :rng (dp/rng dp)))
-
-(defmethod roll ((dice-string string) &key rng)
-  (roll (parse dice-string :rng rng)))
-
 (defmacro extract-roll-function (key)
   (let* ((package (symbol-package 'roll))
          (fn-name (intern (format nil "ROLL-~a" key) package)))
@@ -136,6 +124,19 @@
   (make-instance 'dice-parser 
                  :dice-string dice-string
                  :rng rng))
+
+(defmethod roll ((dp dice-parser) &key)
+  (roll (dp/sides dp) 
+        :dice (dp/dice dp)
+        :bonus (- (dp/bonus dp) (dp/penalty dp))
+        :diff (dp/diff dp)
+        :target (dp/target dp)
+        :keep (dp/keep dp)
+        :rng (dp/rng dp)))
+
+(defmethod roll ((dice-string string) &key rng)
+  (roll (parse dice-string :rng rng)))
+
 
 
 
