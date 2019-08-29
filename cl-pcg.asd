@@ -1,10 +1,10 @@
 ;;;; cl-pcg.asd
 
 (asdf:defsystem #:cl-pcg
-  :description "Describe cl-pcg here"
-  :author "Rakaneth"
-  :license  "Specify license here"
-  :version "0.0.1"
+  :description "A random number generator of the PCG family for use with roguelikes"
+  :author "Quincy West"
+  :license  "MIT"
+  :version "0.2.1"
   :serial t
   :components ((:file "package")
                (:file "cl-pcg")

@@ -1,6 +1,12 @@
-# cl-pcg
+# What this is
 
 This is a random number generator based on [this](https://github.com/imneme/pcg-c-basic) implementation of the PCG family of random number generators. Its API is designed to be used for roguelike games.
+
+# How to use
+
+Clone this project into a place where it can be loaded by [Quicklisp](quicklisp.org); it can then be loaded standalone or pulled in as a dependency for any other Quicklisp project.
+
+The package provides the nickname `pcg` that can be used with exported functions.
 
 # API
 
@@ -45,7 +51,7 @@ Returns a random element from `s`.
 
 ## Dice functions and methods
 
-## Rolling methods
+### Rolling methods
 
 #### `(roll ((sides integer) &key (dice 1) (bonus 0) (diff 0) (target 0) keep rng))`
 
