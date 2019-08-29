@@ -94,7 +94,7 @@ Parses a valid `dice-string`, returning a dice-parser object, which can be `roll
         * `2d10-4t12` rolls 2d10, subtracts 4, then compares against the target number of 12.
 
 * Hits and Difficulty
-    * `XdY(fD)` rolls `XdY` as above, comparing each roll against the difficulty of `diff`, reporting the number of successes in `:hits`
+    * `XdY(fD)` rolls `XdY` as above, comparing each roll against the difficulty of `D`, reporting the number of successes in `:hits`
     * Not compatible with the keep options
     * Examples:
         * `7d10f6` rolls 7 10-sided dice, counting the number of dice that are 6 or above
