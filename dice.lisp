@@ -88,16 +88,21 @@
 (defmethod state-bonus ((dp dice-parser) cur-char)
   (state-case dp cur-char
     (#\t (change-state dp dp/bonus #'state-target))
+    (#\k (change-state dp dp/bonus #'state-keep))
     (#\Nul (change-state dp dp/bonus #'state-done))))
 
 (defmethod state-penalty ((dp dice-parser) cur-char)
   (state-case dp cur-char
     (#\t (change-state dp dp/penalty #'state-target))
+    (#\k (change-state dp dp/penalty #'state-keep))
     (#\Nul (change-state dp dp/penalty #'state-done))))
 
 (defmethod state-target ((dp dice-parser) cur-char)
   (state-case dp cur-char
-    (#\Nul (change-state dp dp/target #'state-done))))
+    (#\Nul (change-state dp dp/target #'state-done))
+    (#\k (change-state dp dp/target #'state-keep))
+    (#\+ (change-state dp dp/target #'state-bonus))
+    (#\- (change-state dp dp/target #'state-penalty))))
 
 (defmethod state-diff ((dp dice-parser) cur-char)
   (state-case dp cur-char

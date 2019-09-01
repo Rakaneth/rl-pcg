@@ -102,14 +102,14 @@ Parses a valid `dice-string`, returning a dice-parser object, which can be `roll
 
 * Keep Highest
     * `XdY(kK)(+|-Z)` rolls `XdY` as above, keeping `K` highest dice, modifying the result by `Z`.
-    * May be used with target numbers. 
-        * Target numbers must come _after_ keep dice.
-        * Target numbers may _not_ be used with bonuses and keep dice.
+    * May be used with target numbers, bonuses, and penalties freely.
     * Examples:
         * `4d6k3` rolls 4 6-sided dice, keeping the highest 3.
         * `4d6k3t11` rolls 4 6-sided dice, keeping the highest 3, comparing the result to a target of 11.
         * `4d6k3+10` rolls 4 6-sided dice, keeping the highest 3, adding 10 to the result.
-        * `4d6k3+10t11` is invalid.
+        * `4d6k3+10t11` rolls 4 6-sided dice, keeping the highest 3, adding 10 to the result, comparing the result to a target of 11.
+            * `4d6+10k3t11` is a valid variation of the previous roll.
+            * `4d6t11k3+10` is also a valid variation.
 
 
 
