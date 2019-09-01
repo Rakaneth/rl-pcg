@@ -99,6 +99,6 @@
   "Gets a random element from a sequence."
   (let* ((-rng (or rng *global-rng*))
          (roll (get-int :max-num (length s) :rng -rng)))
-    (nth roll s)))
+    (elt s roll)))
 
 (defparameter *global-rng* (new-rng))
