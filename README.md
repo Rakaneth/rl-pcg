@@ -111,5 +111,20 @@ Parses a valid `dice-string`, returning a dice-parser object, which can be `roll
             * `4d6+10k3t11` is a valid variation of the previous roll.
             * `4d6t11k3+10` is also a valid variation.
 
+## UUID
+
+### `(get-uuid (&key rng))`
+
+This function returns a v4 UUID as a string value.
+
+## Changelog
+
+### v0.2.3
+
+* Added `get-uuid` function.
+
+### v0.2.2
+
+General release.
 
 

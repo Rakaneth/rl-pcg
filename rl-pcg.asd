@@ -8,4 +8,5 @@
   :serial t
   :components ((:file "package")
                (:file "rl-pcg")
-               (:file "dice")))
+               (:file "dice")
+               (:file "uuid")))

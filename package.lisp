@@ -14,5 +14,6 @@
      :roll-hits
      :get-weighted
      :get-random-element
-     :parse)
+     :parse
+     :get-uuid)
   (:nicknames :pcg))
