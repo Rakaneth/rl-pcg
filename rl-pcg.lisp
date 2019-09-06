@@ -105,7 +105,7 @@
   (loop :with l = (length sequence)
         :with temp = nil
         :for i from (1- l) :downto 1
-        :for r = (get-int :max-num i :rng rng)
+        :for r = (get-int :max-num (1+ i) :rng rng)
         :do (setf temp (elt sequence i)
                   (elt sequence i) (elt sequence r)
                   (elt sequence r) temp)
