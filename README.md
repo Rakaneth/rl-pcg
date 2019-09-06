@@ -117,7 +117,17 @@ Parses a valid `dice-string`, returning a dice-parser object, which can be `roll
 
 This function returns a v4 UUID as a string value.
 
+## Shuffling
+
+### `(shuffle! sequence (&key rng))
+
+This function shuffles `sequence` in place. Modifies and returns the sequence.
+
 ## Changelog
+
+### v0.2.4
+
+* Added `shuffle!` function.
 
 ### v0.2.3
 
@@ -125,6 +135,6 @@ This function returns a v4 UUID as a string value.
 
 ### v0.2.2
 
-General release.
+* General release.
 
 

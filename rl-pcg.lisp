@@ -101,4 +101,14 @@
          (roll (get-int :max-num (length s) :rng -rng)))
     (elt s roll)))
 
+(defun shuffle! (sequence &key rng)
+  (loop :with l = (length sequence)
+        :with temp = nil
+        :for i from (1- l) :downto 1
+        :for r = (get-int :max-num i :rng rng)
+        :do (setf temp (elt sequence i)
+                  (elt sequence i) (elt sequence r)
+                  (elt sequence r) temp)
+        :finally (return sequence)))
+
 (defparameter *global-rng* (new-rng))

@@ -15,5 +15,6 @@
      :get-weighted
      :get-random-element
      :parse
-     :get-uuid)
+     :get-uuid
+     :shuffle!)
   (:nicknames :pcg))

@@ -4,7 +4,7 @@
   :description "A random number generator of the PCG family for use with roguelikes"
   :author "Quincy West"
   :license  "MIT"
-  :version "0.2.3"
+  :version "0.2.4"
   :serial t
   :components ((:file "package")
                (:file "rl-pcg")
