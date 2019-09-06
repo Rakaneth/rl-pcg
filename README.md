@@ -119,7 +119,7 @@ This function returns a v4 UUID as a string value.
 
 ## Shuffling
 
-### `(shuffle! sequence (&key rng))
+### `(shuffle! sequence (&key rng))`
 
 This function shuffles `sequence` in place. Modifies and returns the sequence.
 
