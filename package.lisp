@@ -16,5 +16,6 @@
      :get-random-element
      :parse
      :get-uuid
-     :shuffle!)
+     :shuffle!
+     :with-chance)
   (:nicknames :pcg))
