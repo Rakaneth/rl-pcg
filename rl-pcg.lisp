@@ -83,17 +83,15 @@
 
 (defun get-weighted (table &key (rng nil))
   "Gets a random item from a list of weighted items in the form of (item . weight)."
-  (let* ((-rng (or rng *global-rng*))
-         (total (sum-weighted-list table))
-         (roll (get-int :max-num total :rng -rng)))
-    ;;;; (format t "Roll is ~d~%" roll)
-    (loop :for (item . weight) in table
-          :summing weight into acc
-          :do 
-             ;;;; (format t "Item ~a with weight ~a; Acc is ~d~%" item weight acc)
-             (when (< roll acc) 
-               ;;;; (terpri)
-               (return item)))))
+  (if table 
+      (let* ((-rng (or rng *global-rng*))
+             (total (sum-weighted-list table))
+             (roll (get-int :max-num total :rng -rng)))
+        (loop :for (item . weight) in table
+              :summing weight into acc
+              :do 
+                 (when (< roll acc)
+                   (return item))))))
 
 (defun get-random-element (s &key (rng nil))
   "Gets a random element from a sequence."
