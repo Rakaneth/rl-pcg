@@ -143,7 +143,7 @@
   (roll (parse dice-string :rng rng)))
 
 (defmacro with-chance (pct &body body)
-  `(if (roll-success 100 :target ,(- 101 pct))
+  `(if (roll-success 100 :target (- 101 ,pct))
        ,@body))
 
 
